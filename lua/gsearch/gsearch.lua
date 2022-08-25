@@ -13,8 +13,18 @@ local function get_suggestions(query)
   local resp = vim.fn["webapi#http#get"](url .. search)
   local suggestions =
     vim.list_slice(vim.fn["webapi#json#decode"](resp["content"]), 2)[1]
-
   return suggestions
+end
+
+local function get_prompt_val(prompt_bufnr)
+  local picker = action_state.get_current_picker(prompt_bufnr)
+  return picker.sorter._discard_state.prompt
+end
+
+local function get_search_cmd(query)
+  local search = vim.fn["webapi#http#escape"](query)
+  local command = "open -u https://google.com/search?q=" .. search
+  return command
 end
 
 function M.search(opts)
@@ -24,14 +34,25 @@ function M.search(opts)
       prompt_title = "Search Google",
       finder = finders.new_dynamic { fn = get_suggestions },
       sorter = conf.generic_sorter(opts),
-      attach_mappings = function(prompt_bufnr)
-        actions.select_default:replace(function()
+      attach_mappings = function(prompt_bufnr, map)
+        map("i", "<tab>", function()
+          local prompt_val = get_prompt_val(prompt_bufnr)
+          local command = get_search_cmd(prompt_val)
           actions.close(prompt_bufnr)
-          local selection = action_state.get_selected_entry()
-          -- TODO: Handle empty selection by getting current value in prompt
-          local command = "open -u https://google.com/search?q=" .. selection[1]
           os.execute(command)
         end)
+
+        actions.select_default:replace(function()
+          local prompt_val = get_prompt_val(prompt_bufnr)
+          actions.close(prompt_bufnr)
+          local selection = action_state.get_selected_entry()
+          if selection == nil then
+            selection = { prompt_val }
+          end
+          local command = get_search_cmd(selection[1])
+          os.execute(command)
+        end)
+
         return true
       end,
     })
