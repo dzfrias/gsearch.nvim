@@ -6,6 +6,9 @@ local action_state = require "telescope.actions.state"
 
 local M = {}
 
+--- Get suggestions for a given query
+---@param query string
+---@return string[]
 local function get_suggestions(query)
   local search = vim.fn["webapi#http#escape"](query)
   local url =
@@ -16,16 +19,24 @@ local function get_suggestions(query)
   return suggestions
 end
 
+--- Get the current text in the prompt box
+---@param prompt_bufnr number
+---@return string
 local function get_prompt_val(prompt_bufnr)
   local picker = action_state.get_current_picker(prompt_bufnr)
   return picker.sorter._discard_state.prompt
 end
 
+--- Get the associated command for searching with google
+---@param query string
+---@return string
 local function get_search_cmd(query)
   local search = vim.fn["webapi#http#escape"](query)
   local command = "open -u https://google.com/search?q=" .. search
   return command
 end
+
+-- TODO: Add setup function
 
 function M.search(opts)
   opts = opts or {}
@@ -58,7 +69,5 @@ function M.search(opts)
     })
     :find()
 end
-
-M.search()
 
 return M
