@@ -37,6 +37,7 @@ end
 ---@return string
 local function get_search_cmd(query)
   local search = vim.fn["webapi#http#escape"](query)
+  -- TODO: add support for other operating systems
   local command = "open -u https://google.com/search?q=" .. search
   return command
 end
