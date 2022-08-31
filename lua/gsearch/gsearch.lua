@@ -6,6 +6,11 @@ local action_state = require "telescope.actions.state"
 
 local M = {}
 
+local config = {
+  enabled = true,
+  open_raw_key = "<s-CR>",
+}
+
 --- Get suggestions for a given query
 ---@param query string
 ---@return string[]
@@ -36,9 +41,14 @@ local function get_search_cmd(query)
   return command
 end
 
--- TODO: Add setup function
+function M.setup(opts)
+  config = vim.tbl_deep_extend("force", config, opts or {})
+end
 
 function M.search(opts)
+  if not config.enabled then
+    return
+  end
   opts = opts or {}
   pickers
     .new(opts, {
@@ -46,7 +56,7 @@ function M.search(opts)
       finder = finders.new_dynamic { fn = get_suggestions },
       sorter = conf.generic_sorter(opts),
       attach_mappings = function(prompt_bufnr, map)
-        map("i", "<tab>", function()
+        map("i", config.open_raw_key, function()
           local prompt_val = get_prompt_val(prompt_bufnr)
           local command = get_search_cmd(prompt_val)
           actions.close(prompt_bufnr)
