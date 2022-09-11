@@ -101,6 +101,4 @@ function M.search(opts)
     :find()
 end
 
-M.search()
-
 return M
