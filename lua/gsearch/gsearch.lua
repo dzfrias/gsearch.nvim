@@ -10,6 +10,7 @@ local M = {}
 local config = {
   enabled = true,
   open_raw_key = "<s-CR>",
+  open_cmd = "",
 }
 
 --- Encode the string as a url
@@ -56,6 +57,9 @@ end
 ---@return string
 local function get_search_cmd(query)
   local open_cmd = is_macos() and "open" or "xdg-open"
+  if config.open_cmd ~= "" then
+    open_cmd = config.open_cmd
+  end
   local command = open_cmd
     .. " https://google.com/search?q="
     .. url_encode(query)
