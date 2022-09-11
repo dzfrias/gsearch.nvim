@@ -32,13 +32,17 @@ local function get_prompt_val(prompt_bufnr)
   return picker.sorter._discard_state.prompt
 end
 
+local function is_macos()
+  return vim.fn.has "mac" or vim.fn.has "macunix" or vim.fn.has "gui_mac"
+end
+
 --- Get the associated command for searching with google
 ---@param query string
 ---@return string
 local function get_search_cmd(query)
   local search = vim.fn["webapi#http#escape"](query)
-  -- TODO: add support for other operating systems
-  local command = "open -u https://google.com/search?q=" .. search
+  local open_cmd = is_macos() and "open" or "xdg-open"
+  local command = open_cmd .. " https://google.com/search?q=" .. search
   return command
 end
 
