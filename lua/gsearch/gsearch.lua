@@ -3,6 +3,7 @@ local finders = require "telescope.finders"
 local conf = require("telescope.config").values
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
+local curl = require "plenary.curl"
 
 local M = {}
 
@@ -11,16 +12,30 @@ local config = {
   open_raw_key = "<s-CR>",
 }
 
+--- Encode the string as a url
+---@param str string
+local function url_encode(str)
+  str = string.gsub(str, "([^0-9a-zA-Z !'()*._~-])", function(c)
+    return string.format("%%%02X", string.byte(c))
+  end)
+  str = string.gsub(str, " ", "+")
+  return str
+end
+
 --- Get suggestions for a given query
----@param query string
+---@param search string
 ---@return string[]
-local function get_suggestions(query)
-  local search = vim.fn["webapi#http#escape"](query)
+local function get_suggestions(search)
+  if search == "" then
+    return {}
+  end
   local url =
     "https://suggestqueries.google.com/complete/search?output=chrome&hl=en&q="
-  local resp = vim.fn["webapi#http#get"](url .. search)
-  local suggestions =
-    vim.list_slice(vim.fn["webapi#json#decode"](resp["content"]), 2)[1]
+  local resp = curl.request {
+    url = url .. url_encode(search),
+    method = "GET",
+  }
+  local suggestions = vim.list_slice(vim.fn.json_decode(resp.body), 2)[1]
   return suggestions
 end
 
@@ -40,9 +55,10 @@ end
 ---@param query string
 ---@return string
 local function get_search_cmd(query)
-  local search = vim.fn["webapi#http#escape"](query)
   local open_cmd = is_macos() and "open" or "xdg-open"
-  local command = open_cmd .. " https://google.com/search?q=" .. search
+  local command = open_cmd
+    .. " https://google.com/search?q="
+    .. url_encode(query)
   return command
 end
 
@@ -84,5 +100,7 @@ function M.search(opts)
     })
     :find()
 end
+
+M.search()
 
 return M
