@@ -18,7 +18,7 @@ gsearch is a Telescope-powered tool to allow you to use Google from neovim.
 TABLE OF CONTENTS                                  *gsearch-table-of-contents*
 
 
-- |gsearch-requirements|
+- |gsearch-getting-started|
 - |gsearch-usage|
 - |gsearch-setup|
 - |gsearch-license|
