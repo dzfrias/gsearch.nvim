@@ -1,4 +1,4 @@
-# gsearch
+# gsearch.nvim
 gsearch is a Telescope-powered tool to allow you to use Google from neovim.
 
 ## Table of Contents
