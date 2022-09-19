@@ -3,7 +3,7 @@
 ==============================================================================
 Table of Contents                                  *gsearch-table-of-contents*
 
-1. gsearch                                                   |gsearch-gsearch|
+1. gsearch.nvim                                         |gsearch-gsearch.nvim|
   - Table of Contents                              |gsearch-table-of-contents|
   - Getting Started                                  |gsearch-getting-started|
   - Usage                                                      |gsearch-usage|
@@ -11,7 +11,7 @@ Table of Contents                                  *gsearch-table-of-contents*
   - License                                                  |gsearch-license|
 
 ==============================================================================
-1. gsearch                                                   *gsearch-gsearch*
+1. gsearch.nvim                                         *gsearch-gsearch.nvim*
 
 gsearch is a Telescope-powered tool to allow you to use Google from neovim.
 
