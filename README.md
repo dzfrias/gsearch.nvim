@@ -16,7 +16,7 @@ How to get gsearch in your neovim configuration.
 
 ### Installation:
 With [vim-plug](https://github.com/junegunn/vim-plug)
-```lua
+```vim
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 Plug 'dzfrias/gsearch.nvim'
 ```
@@ -30,7 +30,7 @@ use {
 ```
 
 ## Usage
-To use the the lua api, run:
+To use the lua api, run:
 ```lua
 require("gsearch").search()
 ```
