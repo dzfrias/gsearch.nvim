@@ -8,5 +8,5 @@ if vim.g.loaded_gsearch == 1 then
 end
 vim.g.loaded_gsearch = 1
 
-local gsearch = require "gsearch.gsearch"
+local gsearch = require "gsearch"
 vim.api.nvim_create_user_command("Gsearch", gsearch.search, {})

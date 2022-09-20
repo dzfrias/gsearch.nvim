@@ -105,6 +105,4 @@ function M.search(opts)
     :find()
 end
 
-vim.api.nvim_create_user_command("Gsearch", M.search, {})
-
 return M
