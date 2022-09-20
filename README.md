@@ -35,6 +35,9 @@ To use the lua api, run:
 require("gsearch").search()
 ```
 
+There is also a vim command, `Gsearch`, so you can alternatively run `:Gsearch`
+to achieve the same thing as the option above.
+
 You can also pass in Telescope options to the `search` command.
 
 ## Setup
