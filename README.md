@@ -20,15 +20,15 @@ How to get gsearch in your neovim configuration.
 ### Installation:
 With [vim-plug](https://github.com/junegunn/vim-plug)
 ```vim
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
-Plug 'dzfrias/gsearch.nvim'
+Plug "nvim-telescope/telescope.nvim", { "tag": "0.1.0" }
+Plug "dzfrias/gsearch.nvim"
 ```
 
 With [packer.nvim](https://github.com/wbthomason/packer.nvim)
 ```lua
 use {
-  'dzfrias/gsearch.nvim',
-  requires = { { 'nvim-telescope/telescope.nvim', tag = '0.1.0' } },
+  "dzfrias/gsearch.nvim",
+  requires = { { "nvim-telescope/telescope.nvim", tag = "0.1.0" } },
 }
 ```
 
@@ -49,6 +49,9 @@ Below are the default options for the setup function.
 require("gsearch").setup {
   -- Set to false to disable the plugin
   enabled = true,
+  -- Whether to include what's in your Telescope prompt in the list of
+  -- suggestions
+  raw_included = true,
   -- The key to use to Google search for what's in your Telescope prompt
   -- without using one of the suggestions
   open_raw_key = "<s-CR>",

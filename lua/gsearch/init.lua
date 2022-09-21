@@ -9,6 +9,7 @@ local M = {}
 
 local config = {
   enabled = true,
+  raw_included = true,
   open_raw_key = "<s-CR>",
   open_cmd = "",
 }
@@ -23,10 +24,18 @@ local function url_encode(str)
   return str
 end
 
+--- Get the current text in the prompt box
+---@param prompt_bufnr number
+---@return string
+local function get_prompt_val(prompt_bufnr)
+  local picker = action_state.get_current_picker(prompt_bufnr)
+  return picker.sorter._discard_state.prompt
+end
+
 --- Get suggestions for a given query
 ---@param search string
 ---@return string[]
-local function get_suggestions(search)
+local function get_suggestions(search, bufnr)
   if search == "" then
     return {}
   end
@@ -37,15 +46,10 @@ local function get_suggestions(search)
     method = "GET",
   }
   local suggestions = vim.list_slice(vim.fn.json_decode(resp.body), 2)[1]
+  if config.raw_included then
+    table.insert(suggestions, get_prompt_val(bufnr))
+  end
   return suggestions
-end
-
---- Get the current text in the prompt box
----@param prompt_bufnr number
----@return string
-local function get_prompt_val(prompt_bufnr)
-  local picker = action_state.get_current_picker(prompt_bufnr)
-  return picker.sorter._discard_state.prompt
 end
 
 local function is_macos()
@@ -78,7 +82,11 @@ function M.search(opts)
   pickers
     .new(opts, {
       prompt_title = "Search Google",
-      finder = finders.new_dynamic { fn = get_suggestions },
+      finder = finders.new_dynamic {
+        fn = function(search)
+          return get_suggestions(search, vim.fn.bufnr())
+        end,
+      },
       sorter = conf.generic_sorter(opts),
       attach_mappings = function(prompt_bufnr, map)
         map("i", config.open_raw_key, function()
