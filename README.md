@@ -58,7 +58,8 @@ require("gsearch").setup {
   -- suggestions
   raw_included = true,
   -- The key to use to Google search for what's in your Telescope prompt
-  -- without using one of the suggestions
+  -- without using one of the suggestions. Note that the <s-CR> keybinding may
+  -- not work on all terminals/operating systems.
   open_raw_key = "<s-CR>",
   -- The shell command to use to open the URL. As an empty string, it
   -- defaults to your OS defaults ("open" for macOS, "xdg-open" for Linux)
