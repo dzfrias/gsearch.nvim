@@ -7,14 +7,17 @@ You can alternatively view this all in vim by running `:help gsearch`.
 
 <!-- panvimdoc-ignore-end -->
 
-
 https://user-images.githubusercontent.com/96022404/191351709-2ab8254f-1543-4118-baa7-a8e0cf4286fa.mov
+
+<!-- panvimdoc-ignore-start -->
 
 ## Table of Contents
 - [Getting Started](#getting-started)
 - [Usage](#usage)
 - [Setup](#setup)
 - [License](#license)
+
+<!-- panvimdoc-ignore-end -->
 
 ## Getting Started
 How to get gsearch in your neovim configuration.
