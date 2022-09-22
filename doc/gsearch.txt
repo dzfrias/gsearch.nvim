@@ -1,10 +1,9 @@
-*gsearch.txt*          For NVIM v0.5.0          Last change: 2022 September 21
+*gsearch.txt*          For NVIM v0.5.0          Last change: 2022 September 22
 
 ==============================================================================
 Table of Contents                                  *gsearch-table-of-contents*
 
 1. gsearch.nvim                                         |gsearch-gsearch.nvim|
-  - Table of Contents                              |gsearch-table-of-contents|
   - Getting Started                                  |gsearch-getting-started|
   - Usage                                                      |gsearch-usage|
   - Setup                                                      |gsearch-setup|
@@ -17,15 +16,6 @@ gsearch is a Telescope-powered tool to allow you to use Google from neovim.
 
 
 https://user-images.githubusercontent.com/96022404/191351709-2ab8254f-1543-4118-baa7-a8e0cf4286fa.mov
-
-TABLE OF CONTENTS                                  *gsearch-table-of-contents*
-
-
-- |gsearch-getting-started|
-- |gsearch-usage|
-- |gsearch-setup|
-- |gsearch-license|
-
 
 GETTING STARTED                                      *gsearch-getting-started*
 
